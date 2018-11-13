@@ -11,22 +11,10 @@ type Handler interface {
 	Magic(models.Request) (models.Response, error)
 }
 
-func Run(code string, req models.Request) (models.Response, error) {
+func Run(path *string, req models.Request) (models.Response, error) {
 	var res models.Response
 
-	var mod string
-	switch code {
-	case "regular":
-		mod = "./plugins/regular.so"
-		break
-	case "encrypt":
-		mod = "./plugins/encrypt.so"
-		break
-	default:
-		return res, fmt.Errorf("Invalid input")
-	}
-
-	plug, err := plugin.Open(mod)
+	plug, err := plugin.Open(*path)
 	if err != nil {
 		return res, err
 	}

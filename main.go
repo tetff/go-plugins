@@ -2,18 +2,16 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
-	"os"
 
 	"github.com/tothmate90/go-plugins/handlers"
 	"github.com/tothmate90/go-plugins/models"
 )
 
 func main() {
-	var code string
-	if len(os.Args) == 2 {
-		code = os.Args[1]
-	}
+	path := flag.String("path", "./plugins/regular.so", "regular for simple json, and encrypt for encrypted")
+	flag.Parse()
 
 	req := models.Request{
 		Name:     "John Doe",
@@ -24,7 +22,7 @@ func main() {
 		Role:     "Admin",
 	}
 
-	res, err := handlers.Run(code, req)
+	res, err := handlers.Run(path, req)
 	if err != nil {
 		panic(err)
 	}
